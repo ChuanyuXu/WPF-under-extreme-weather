@@ -180,12 +180,19 @@ model_fore_test_task_query = model_fore_test_task_query.to(device)
 print( "#########################################################################——————————pre-train——————————############################################################")
 total_train_step=0
 total_test_step=0
-epoch1_pre = 8000
+epoch1_pre = 80000
 writer1=SummaryWriter("./logs_train/loss1")
 writer2=SummaryWriter("./logs_train/loss2")
 start_time=time.time()
 for i in range(epoch1_pre):
-    k=0
+    if i<10000:
+        k = 0
+    elif 10000<=i<20000:
+        k = 1
+    elif 20000<=i<30000:
+        k = 5
+    elif 30000 <= i:
+        k = 10
     Train_target_p = Train_target_p.to(device)
     Train_input_c = Train_input_c.to(device)
     model_fore_pre.train()
@@ -211,7 +218,7 @@ torch.save(model_fore_pre.state_dict(),"./model_fore_pre.pth")
 
 
 ## train_task_support
-epoch_train_task=7000
+epoch_train_task=70000
 for i_t in range(epoch_train_task):
     index_class = random.sample(range(0, 10), 5)
     nwp_conven_class=list()
